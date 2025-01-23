@@ -18,7 +18,7 @@ with col1:
     st.markdown(
         """
         <div style="background-color:#ffddc1; padding:15px; border-radius:10px;">
-            <h4 style="color:#333333;">📌 How to Use</h4>
+            <h4 style="color:#333333;">📌 How to Use this app</h4>
             <p style="color:#555555;">Use the sidebar to navigate between pages and explore the app's features.</p>
         </div>
         """,
