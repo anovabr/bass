@@ -1,0 +1,8 @@
+streamlit
+tableone
+pandas
+numpy
+matplotlib
+seaborn
+scipy
+data_loader
