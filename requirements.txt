@@ -5,6 +5,5 @@ numpy
 matplotlib
 seaborn
 scipy
-plotly.express
-statsmodels.api
-statsmodels.formula.api
+plotly-express
+statsmodels
