@@ -108,9 +108,15 @@ with tab1:
         anova_table = sm.stats.anova_lm(model, typ=3)
         st.dataframe(anova_table, use_container_width=True)
 
-        # Create and display the plot with grouping
+       # Create and display the plot with grouping and stratification
         st.subheader(f"Bar Chart: {selected} by groups")
         
+        # Add checkbox for swapping variables
+        if len(grouping_vars) > 1:
+            swap_vars = st.checkbox("Swap x-axis and grouping variables")
+        else:
+            swap_vars = False
+
         # Pre-aggregate the data with multiple grouping variables and calculate standard error
         agg_df = (df.groupby(grouping_vars)[selected]
                  .agg(['mean', 'count', 'std'])
@@ -123,27 +129,35 @@ with tab1:
         for var in grouping_vars:
             agg_df[var] = agg_df[var].astype('category')
         
+        # Determine x-axis and color variables based on swap setting
+        if swap_vars and len(grouping_vars) > 1:
+            x_var = grouping_vars[1]
+            color_var = grouping_vars[0]
+        else:
+            x_var = grouping_vars[0]
+            color_var = grouping_vars[1] if len(grouping_vars) > 1 else None
+
         # Create the plot with appropriate grouping
         fig = px.bar(
             agg_df,
-            x=grouping_vars[0],
+            x=x_var,
             y='mean',
             error_y='stderr',
-            color=grouping_vars[1] if len(grouping_vars) > 1 else None,
+            color=color_var,
             title=f"Mean {selected} by {', '.join(grouping_vars)}",
             barmode="group"
         )
 
         # Update layout to improve appearance
         fig.update_layout(
-            xaxis_title=grouping_vars[0],
+            xaxis_title=x_var,
             yaxis_title=f"Mean {selected}",
             xaxis_tickangle=-45,
             xaxis={'type': 'category', 
                   'categoryorder': 'array', 
-                  'categoryarray': sorted(agg_df[grouping_vars[0]].unique())},
+                  'categoryarray': sorted(agg_df[x_var].unique())},
             showlegend=True,
-            legend_title_text=grouping_vars[1] if len(grouping_vars) > 1 else None,
+            legend_title_text=color_var if color_var else None,
         )
 
         # Update error bar appearance to minimize overlap

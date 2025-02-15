@@ -29,7 +29,7 @@ with col2:
     st.markdown(
         """
         <div style="background-color:#c1e1ff; padding:15px; border-radius:10px;">
-            <h4 style="color:#333333;">🐍 Made in Python - Still experimental</h4>
+            <h4 style="color:#333333;">🐍 Made in Python with Streamlit</h4>
             <p style="color:#555555;">Reach out to me at luisfc@gmail.com.</p>
         </div>
         """,
